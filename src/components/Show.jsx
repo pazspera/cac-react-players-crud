@@ -27,7 +27,7 @@ export const Show = () => {
     const playerDoc = doc(db, "players", id);
     await deleteDoc(playerDoc);
     // una vez borrado, necesitamos que se actualice con la info borrada
-    // getPlayers()
+    getPlayers();
   };
 
   // 5. función para la confirmación de sweet alert
@@ -39,6 +39,7 @@ export const Show = () => {
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
+      cancelButtonText: "Cancelar",
       confirmButtonText: "¡Sí, quiero borralo!",
     }).then((result) => {
       if (result.isConfirmed) {
@@ -55,5 +56,53 @@ export const Show = () => {
   }, []);
 
   // 7. devolvemos la vista del componente
-  return (<div></div>);
+  return (
+    <>
+      <div className="container">
+        <div className="row">
+          <div className="col my-3">
+            <div className="d-grid gap-2">
+              <Link to="/create" className="btn btn-primary">
+                Crear
+              </Link>
+            </div>
+            <table className="table table-dark table-hover table-striped my-4">
+              <thead>
+                <tr>
+                  <th>Nombre</th>
+                  <th>Apellido</th>
+                  <th>Número</th>
+                  <th>Posición</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {players.map((player) => (
+                  <tr key={player.id}>
+                    <td>{player.name}</td>
+                    <td>{player.lastName}</td>
+                    <td>{player.number}</td>
+                    <td>{player.position}</td>
+                    <td>
+                      <Link to={`/edit/${player.id}`} className="btn btn-light me-2">
+                        <i className="fa-solid fa-pen-to-square"></i>
+                      </Link>
+                      <button
+                        onClick={() => {
+                          confirmDelete(player.id);
+                        }}
+                        className="btn btn-danger"
+                      >
+                        <i className="fa-solid fa-trash-can"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 };
