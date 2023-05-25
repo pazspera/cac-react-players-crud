@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../firebase/firebaseConfig";
 
@@ -50,7 +50,10 @@ export const Create = () => {
               <input type="text" className="form-control" value={position} onChange={(e) => setPosition(e.target.value)} />
             </div>
             <div className="my-3">
-              <button className="btn btn-primary">Create player</button>
+              <button className="btn btn-primary me-3">Create player</button>
+              <Link to={"/"}>
+                <button className="btn btn-danger">Cancel</button>
+              </Link>
             </div>
           </form>
         </div>
